@@ -1,33 +1,47 @@
+생성해 드린 watermarked_img_11548517314693945366.png를 메인 화면의 배경으로 사용하여, 동굴의 깊이감과 중앙의 로고만 강조되도록 코드를 다듬었습니다.
 
+이제 index.html 파일을 열어 아래 코드로 완전히 교체하세요.
+
+HTML
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>NCBK - NEVER SEE BUT K</title>
+    <title>NCBK</title>
     <style>
-        body, html { margin: 0; padding: 0; height: 100%; font-family: 'serif'; background: #050505; color: #fff; }
-        .screen { display: none; height: 100vh; width: 100%; transition: opacity 1s ease; }
-        .active { display: flex; align-items: center; justify-content: center; opacity: 1; }
+        body, html { margin: 0; padding: 0; height: 100%; width: 100%; overflow: hidden; }
         
-        /* 메인 화면 */
-        #main-screen { background: url('watermarked_img_18325188740117090656.jpg') no-repeat center center/cover; }
-        .fog-overlay { position: absolute; width: 100%; height: 100%; background: rgba(0,0,0,0.6); }
-        #logo { z-index: 1; font-size: 3rem; cursor: pointer; letter-spacing: 0.8rem; border: 1px solid #333; padding: 20px; }
+        /* 메인 화면: 동굴 배경 */
+        #main-screen { 
+            height: 100vh; width: 100%; 
+            background: url('watermarked_img_11548517314693945366.png') no-repeat center center/cover;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; transition: opacity 1s;
+        }
+        
+        /* 로고 클릭 영역 (동굴 안쪽 로고 위에 투명하게 배치) */
+        #enter-zone {
+            width: 20%; height: 20%; 
+            position: absolute; cursor: pointer;
+        }
 
         /* 룩북 화면 */
-        #lookbook-screen { background: #ffffff; color: #000; padding: 50px; overflow-y: auto; display: block; }
+        #lookbook-screen { 
+            display: none; height: 100vh; width: 100%; background: #ffffff; 
+            padding: 50px; overflow-y: auto; box-sizing: border-box;
+        }
         .lookbook-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; }
         .look img { width: 100%; height: auto; border: 1px solid #eee; }
     </style>
 </head>
 <body>
 
-    <div id="main-screen" class="screen active">
-        <div class="fog-overlay"></div>
-        <h1 id="logo" onclick="showLookbook()">NCBK</h1>
+    <div id="main-screen" onclick="showLookbook()">
+        <!-- 동굴 이미지가 배경이므로 별도 로고 태그 없이 이미지를 그대로 활용 -->
+        <div id="enter-zone"></div>
     </div>
 
-    <div id="lookbook-screen" class="screen">
+    <div id="lookbook-screen">
         <div class="lookbook-grid">
             <div class="look"><img src="000cf455-805d-4732-ba11-3b1f4c0c03e4.jpg" alt="Look 1"></div>
             <div class="look"><img src="94820ca3-1e22-45d2-84ff-4df28d0c240d.jpg" alt="Look 2"></div>
@@ -39,8 +53,8 @@
 
     <script>
         function showLookbook() {
-            document.getElementById('main-screen').classList.remove('active');
-            document.getElementById('lookbook-screen').classList.add('active');
+            document.getElementById('main-screen').style.display = 'none';
+            document.getElementById('lookbook-screen').style.display = 'block';
         }
     </script>
 </body>
