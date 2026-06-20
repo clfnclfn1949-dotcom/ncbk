@@ -22,7 +22,7 @@
             display: flex; flex-direction: column; align-items: center;
             transition: opacity 1s ease 0.3s, visibility 1s ease 0.3s;
         }
-        #lookbook.active { opacity: 1; visibility: visible; }
+        #lookbook.active { opacity: 1; visibility: visible; overflow-y: auto; }
         
         #lookbook-header { width: 100%; max-width: 900px; display: flex; justify-content: space-between; align-items: center; padding: 0 0 40px 0; color: #bca08d; }
         #lookbook-title { font-size: 1.5rem; letter-spacing: 0.3rem; }
@@ -51,6 +51,7 @@
             <img src="look3.jpg" onclick="openModal(this.src)" alt="Look 3">
             <img src="look4.jpg" onclick="openModal(this.src)" alt="Look 4">
             <img src="look5.jpg" onclick="openModal(this.src)" alt="Look 5">
+            <img src="look6.jpg" onclick="openModal(this.src)" alt="Look 6">
         </div>
     </div>
 
@@ -78,7 +79,6 @@
         }
 
         function closeModal() {
-            // 모달만 닫고 룩북 페이지(목록)는 그대로 유지
             document.getElementById('modal').style.display = 'none';
         }
     </script>
