@@ -4,20 +4,34 @@
     <meta charset="UTF-8">
     <title>NCBK</title>
     <style>
-        body, html { margin: 0; padding: 0; height: 100%; background: #000; }
+        body, html { margin: 0; padding: 0; height: 100%; background: #000; overflow: hidden; }
+        
+        /* 메인: 동굴 배경 전체 */
         #main { 
             height: 100vh; width: 100%; 
-            background: url('cave.png') center/cover;
+            background: url('cave.png') no-repeat center center/cover;
             display: flex; align-items: center; justify-content: center;
-            cursor: pointer; color: #fff; font-size: 2rem; border: 1px solid #fff;
+            cursor: pointer; /* 클릭 가능하다는 표시 */
+            position: fixed; top: 0; left: 0; z-index: 10;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
         }
-        #lookbook { display: none; background: #fff; padding: 20px; }
+
+        /* 룩북: 5개 그리드 */
+        #lookbook { 
+            opacity: 0; visibility: hidden;
+            background: #fff; padding: 20px; 
+            height: 100vh; overflow-y: auto;
+            transition: opacity 0.8s ease 0.2s, visibility 0.8s ease 0.2s;
+        }
+        #lookbook.active { opacity: 1; visibility: visible; }
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 10px; }
-        .grid img { width: 100%; }
+        .grid img { width: 100%; display: block; }
     </style>
 </head>
 <body>
-    <div id="main" onclick="document.getElementById('lookbook').style.display='block'; this.style.display='none';">ENTER</div>
+    
+    <div id="main" onclick="showLookbook()"></div>
+    
     <div id="lookbook">
         <div class="grid">
             <img src="look1.jpg.jpg" alt="Look 1">
@@ -27,4 +41,19 @@
             <img src="look5.jpg.jpg" alt="Look 5">
         </div>
     </div>
+
+    <script>
+        function showLookbook() {
+            // 메인 화면을 서서히 사라지게 함
+            const main = document.getElementById('main');
+            main.style.opacity = '0';
+            main.style.visibility = 'hidden';
+            
+            // 룩북 화면을 서서히 나타나게 함
+            const lookbook = document.getElementById('lookbook');
+            lookbook.classList.add('active');
+            document.body.style.overflow = 'auto'; // 스크롤 활성화
+        }
+    </script>
 </body>
+</html>
