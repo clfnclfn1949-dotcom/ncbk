@@ -6,26 +6,34 @@
     <style>
         body, html { margin: 0; padding: 0; height: 100%; background: #000; overflow: hidden; }
         
-        /* 메인: 동굴 배경 전체 */
+        /* 메인: 동굴 배경 */
         #main { 
             height: 100vh; width: 100%; 
             background: url('cave.png') no-repeat center center/cover;
             display: flex; align-items: center; justify-content: center;
-            cursor: pointer; /* 클릭 가능하다는 표시 */
+            cursor: pointer;
             position: fixed; top: 0; left: 0; z-index: 10;
             transition: opacity 0.8s ease, visibility 0.8s ease;
         }
 
-        /* 룩북: 5개 그리드 */
+        /* 룩북: 검은 배경 & 이미지 중앙 정렬 */
         #lookbook { 
             opacity: 0; visibility: hidden;
-            background: #fff; padding: 20px; 
-            height: 100vh; overflow-y: auto;
+            background: #000; /* 배경을 검게 변경 */
+            padding: 40px; 
+            min-height: 100vh; 
+            display: flex; justify-content: center; /* 가로 중앙 정렬 */
             transition: opacity 0.8s ease 0.2s, visibility 0.8s ease 0.2s;
         }
-        #lookbook.active { opacity: 1; visibility: visible; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 10px; }
-        .grid img { width: 100%; display: block; }
+        #lookbook.active { opacity: 1; visibility: visible; overflow-y: auto; }
+        
+        .grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(300px, 400px)); 
+            gap: 30px; 
+            justify-content: center; /* 그리드 내부 요소 중앙 정렬 */
+        }
+        .grid img { width: 100%; display: block; border: 1px solid #333; }
     </style>
 </head>
 <body>
@@ -35,24 +43,22 @@
     <div id="lookbook">
         <div class="grid">
             <img src="look1.jpg.jpg" alt="Look 1">
-            <img src="look2.jpg.jpg" alt="Look 2">
+            <img src="룩2.jpg.jpg" alt="Look 2">
             <img src="look3.jpg.jpg" alt="Look 3">
-            <img src="look4.jpg.jpg" alt="Look 4">
+            <img src="룩4.jpg.jpg" alt="Look 4">
             <img src="look5.jpg.jpg" alt="Look 5">
         </div>
     </div>
 
     <script>
         function showLookbook() {
-            // 메인 화면을 서서히 사라지게 함
             const main = document.getElementById('main');
             main.style.opacity = '0';
             main.style.visibility = 'hidden';
             
-            // 룩북 화면을 서서히 나타나게 함
             const lookbook = document.getElementById('lookbook');
             lookbook.classList.add('active');
-            document.body.style.overflow = 'auto'; // 스크롤 활성화
+            document.body.style.overflow = 'auto';
         }
     </script>
 </body>
