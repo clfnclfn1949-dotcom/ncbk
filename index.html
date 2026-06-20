@@ -1,151 +1,85 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NCPK</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    <meta charset="UTF-8">
+    <title>NCBK - NEVER SEE BUT K</title>
+    <style>
+        body, html { margin: 0; padding: 0; height: 100%; background: #1a0f0a; font-family: 'Times New Roman', serif; overflow: hidden; }
+        
+        /* 메인: 동굴 배경 */
+        #main { 
+            height: 100vh; width: 100%; 
+            background: url('cave.png') no-repeat center center/cover;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer;
+            position: fixed; top: 0; left: 0; z-index: 10;
+            transition: opacity 1s ease, visibility 1s ease;
+        }
 
-    body {
-      background: #1a0e08;
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      overflow: hidden;
-    }
+        /* 룩북: 검은 배경 & 이미지 중앙 정렬 */
+        #lookbook { 
+            opacity: 0; visibility: hidden;
+            background: #1a0f0a; /* 진한 갈색 배경 */
+            padding: 40px; 
+            min-height: 100vh; 
+            display: flex; flex-direction: column; align-items: center; /* 가로 중앙 정렬 */
+            transition: opacity 1s ease 0.3s, visibility 1s ease 0.3s;
+        }
+        #lookbook.active { opacity: 1; visibility: visible; overflow-y: auto; }
+        
+        /* 룩북 헤더 */
+        #lookbook-header { width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 0 0 40px 0; color: #bca08d; }
+        #lookbook-title { font-size: 1.5rem; letter-spacing: 0.3rem; }
+        #back-btn { padding: 10px 20px; border: 1px solid #bca08d; background: transparent; color: #bca08d; cursor: pointer; text-decoration: none; }
 
-    #main-screen {
-      width: 100vw;
-      height: 100vh;
-      background: url('cave.png') no-repeat center center / cover;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: opacity 0.9s ease;
-      position: fixed;
-      top: 0; left: 0;
-      z-index: 10;
-    }
-
-    #enter-hint {
-      opacity: 0;
-      transition: opacity 0.4s ease;
-      color: #d4a97a;
-      font-size: 13px;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      margin-top: 12px;
-      user-select: none;
-    }
-    #main-screen:hover #enter-hint { opacity: 1; }
-
-    #lookbook-screen {
-      display: none;
-      background: #1a0e08;
-      min-height: 100vh;
-      padding: 40px 32px 80px;
-    }
-    #lookbook-screen.active {
-      display: block;
-      overflow-y: auto;
-    }
-
-    #lb-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 32px;
-      border-bottom: 1px solid #3d2416;
-      padding-bottom: 16px;
-    }
-
-    #lb-title {
-      font-size: 16px;
-      letter-spacing: 0.3em;
-      color: #c4956a;
-      font-weight: 400;
-      text-transform: uppercase;
-    }
-
-    #back-btn {
-      background: none;
-      border: 1px solid #3d2416;
-      color: #9c7050;
-      font-size: 12px;
-      letter-spacing: 0.15em;
-      padding: 6px 16px;
-      cursor: pointer;
-      text-transform: uppercase;
-      transition: border-color 0.2s, color 0.2s;
-      border-radius: 2px;
-    }
-    #back-btn:hover { border-color: #c4956a; color: #c4956a; }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
-      max-width: 1000px;
-      margin: 0 auto;
-    }
-
-    .grid-item {
-      overflow: hidden;
-      background: #120a05;
-    }
-
-    .grid-item img {
-      width: 100%;
-      display: block;
-      transition: transform 0.4s ease;
-    }
-
-    .grid-item:hover img { transform: scale(1.03); }
-  </style>
+        /* 룩북 그리드 */
+        .grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(300px, 400px)); 
+            gap: 30px; 
+            justify-content: center; /* 그리드 내부 요소 중앙 정렬 */
+        }
+        .grid img { width: 100%; display: block; border: 1px solid #333; }
+    </style>
 </head>
 <body>
-
-  <div id="main-screen" onclick="enterLookbook()">
-    <div id="enter-hint">click to enter</div>
-  </div>
-
-  <div id="lookbook-screen">
-    <div id="lb-header">
-      <span id="lb-title">NCPK — Collection</span>
-      <button id="back-btn" onclick="goBack()">← Back</button>
+    
+    <div id="main" onclick="showLookbook()"></div>
+    
+    <div id="lookbook">
+        <div id="lookbook-header">
+            <div id="lookbook-title">NCPK — COLLECTION</div>
+            <a href="#" id="back-btn" onclick="hideLookbook()">BACK</a>
+        </div>
+        <div class="grid">
+            <img src="look1.jpg.jpg" alt="Look 1">
+            <img src="look2.jpg.jpg" alt="Look 2">
+            <img src="look3.jpg.jpg" alt="Look 3">
+            <img src="look4.jpg.jpg" alt="Look 4">
+            <img src="look5.jpg.jpg" alt="Look 5">
+        </div>
     </div>
-    <div class="grid">
-      <div class="grid-item"><img src="look1.jpg.jpg" alt="Look 1"></div>
-      <div class="grid-item"><img src="look2.jpg.jpg" alt="Look 2"></div>
-      <div class="grid-item"><img src="look3.jpg.jpg" alt="Look 3"></div>
-      <div class="grid-item"><img src="look4.jpg.jpg" alt="Look 4"></div>
-      <div class="grid-item"><img src="look5.jpg.jpg" alt="Look 5"></div>
-    </div>
-  </div>
 
-  <script>
-    function enterLookbook() {
-      const ms = document.getElementById('main-screen');
-      ms.style.opacity = '0';
-      setTimeout(() => {
-        ms.style.display = 'none';
-        document.body.style.overflow = 'auto';
-        const lb = document.getElementById('lookbook-screen');
-        lb.classList.add('active');
-      }, 900);
-    }
+    <script>
+        function showLookbook() {
+            const main = document.getElementById('main');
+            main.style.opacity = '0';
+            main.style.visibility = 'hidden';
+            
+            const lookbook = document.getElementById('lookbook');
+            lookbook.classList.add('active');
+            document.body.style.overflow = 'auto';
+        }
 
-    function goBack() {
-      const lb = document.getElementById('lookbook-screen');
-      lb.classList.remove('active');
-      document.body.style.overflow = 'hidden';
-      const ms = document.getElementById('main-screen');
-      ms.style.display = 'flex';
-      ms.style.opacity = '0';
-      setTimeout(() => { ms.style.opacity = '1'; }, 30);
-    }
-  </script>
-
+        function hideLookbook() {
+            const lookbook = document.getElementById('lookbook');
+            lookbook.classList.remove('active');
+            
+            const main = document.getElementById('main');
+            main.style.opacity = '1';
+            main.style.visibility = 'visible';
+            document.body.style.overflow = 'hidden';
+        }
+    </script>
 </body>
 </html>
