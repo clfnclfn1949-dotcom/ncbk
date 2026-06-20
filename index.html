@@ -22,25 +22,17 @@
             display: flex; flex-direction: column; align-items: center;
             transition: opacity 1s ease 0.3s, visibility 1s ease 0.3s;
         }
-        #lookbook.active { opacity: 1; visibility: visible; overflow-y: auto; }
+        #lookbook.active { opacity: 1; visibility: visible; }
         
         #lookbook-header { width: 100%; max-width: 900px; display: flex; justify-content: space-between; align-items: center; padding: 0 0 40px 0; color: #bca08d; }
         #lookbook-title { font-size: 1.5rem; letter-spacing: 0.3rem; }
         #back-btn { padding: 10px 20px; border: 1px solid #bca08d; background: transparent; color: #bca08d; cursor: pointer; text-decoration: none; }
 
-        /* 2열 배열 */
-        .grid { 
-            display: grid; 
-            grid-template-columns: repeat(2, 1fr); 
-            gap: 20px; 
-            max-width: 800px;
-            width: 100%;
-        }
+        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; max-width: 800px; width: 100%; }
         .grid img { width: 100%; display: block; border: 1px solid #333; cursor: pointer; transition: transform 0.3s; }
         .grid img:hover { transform: scale(1.02); }
 
-        /* 모달 스타일 */
-        #modal { display: none; position: fixed; z-index: 100; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); justify-content: center; align-items: center; }
+        #modal { display: none; position: fixed; z-index: 100; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); justify-content: center; align-items: center; cursor: pointer; }
         #modal img { max-width: 90%; max-height: 90%; border: 2px solid #bca08d; }
     </style>
 </head>
@@ -51,14 +43,14 @@
     <div id="lookbook">
         <div id="lookbook-header">
             <div id="lookbook-title">NCPK — COLLECTION</div>
-            <a href="#" id="back-btn" onclick="hideLookbook()">BACK</a>
+            <a href="#" id="back-btn" onclick="hideLookbook(event)">BACK</a>
         </div>
         <div class="grid">
-            <img src="look1.jpg.jpg" onclick="openModal(this.src)" alt="Look 1">
-            <img src="look2.jpg.jpg" onclick="openModal(this.src)" alt="Look 2">
-            <img src="look3.jpg.jpg" onclick="openModal(this.src)" alt="Look 3">
-            <img src="look4.jpg.jpg" onclick="openModal(this.src)" alt="Look 4">
-            <img src="look5.jpg.jpg" onclick="openModal(this.src)" alt="Look 5">
+            <img src="look1.jpg" onclick="openModal(this.src)" alt="Look 1">
+            <img src="look2.jpg" onclick="openModal(this.src)" alt="Look 2">
+            <img src="look3.jpg" onclick="openModal(this.src)" alt="Look 3">
+            <img src="look4.jpg" onclick="openModal(this.src)" alt="Look 4">
+            <img src="look5.jpg" onclick="openModal(this.src)" alt="Look 5">
         </div>
     </div>
 
@@ -71,23 +63,22 @@
             document.getElementById('main').style.opacity = '0';
             document.getElementById('main').style.visibility = 'hidden';
             document.getElementById('lookbook').classList.add('active');
-            document.body.style.overflow = 'auto';
         }
 
-        function hideLookbook() {
+        function hideLookbook(event) {
+            if (event) event.preventDefault();
             document.getElementById('lookbook').classList.remove('active');
             document.getElementById('main').style.opacity = '1';
             document.getElementById('main').style.visibility = 'visible';
-            document.body.style.overflow = 'hidden';
         }
 
         function openModal(src) {
-            const modal = document.getElementById('modal');
             document.getElementById('modal-img').src = src;
-            modal.style.display = 'flex';
+            document.getElementById('modal').style.display = 'flex';
         }
 
         function closeModal() {
+            // 모달만 닫고 룩북 페이지(목록)는 그대로 유지
             document.getElementById('modal').style.display = 'none';
         }
     </script>
